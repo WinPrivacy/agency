@@ -102,6 +102,125 @@ class InfiniteMarquee {
     }
 }
 
+// True Infinite Horizontal Scroll Class
+class TrueInfiniteScroll {
+    constructor(selector) {
+        this.container = document.querySelector(selector);
+        if (!this.container) return;
+
+        this.originalHTML = this.container.innerHTML;
+        this.items = [];
+        this.itemWidth = 0;
+        this.totalCopies = 5; // Number of copies to create
+        this.isScrolling = false;
+
+        this.init();
+    }
+
+    init() {
+        console.log('Initializing true infinite scroll...');
+
+        // Store original items data
+        this.storeOriginalItems();
+
+        // Clear container and rebuild with multiple copies
+        this.buildInfiniteItems();
+
+        // Calculate dimensions
+        setTimeout(() => {
+            this.calculateDimensions();
+            this.setInitialPosition();
+            this.attachScrollListener();
+        }, 100);
+    }
+
+    storeOriginalItems() {
+        const originalItems = Array.from(this.container.children);
+        this.items = originalItems.map(item => ({
+            img: item.querySelector('img').src,
+            alt: item.querySelector('img').alt,
+            text: item.querySelector('.desc-text').textContent
+        }));
+        console.log('Stored', this.items.length, 'original items');
+    }
+
+    buildInfiniteItems() {
+        this.container.innerHTML = '';
+
+        // Create multiple sets of items
+        for (let copy = 0; copy < this.totalCopies; copy++) {
+            this.items.forEach(item => {
+                const scrollItem = document.createElement('div');
+                scrollItem.className = 'scroll-item';
+
+                const img = document.createElement('img');
+                img.src = item.img;
+                img.alt = item.alt;
+
+                const text = document.createElement('p');
+                text.className = 'desc-text';
+                text.textContent = item.text;
+
+                scrollItem.appendChild(img);
+                scrollItem.appendChild(text);
+                this.container.appendChild(scrollItem);
+            });
+        }
+
+        console.log('Built', this.container.children.length, 'total items');
+    }
+
+    calculateDimensions() {
+        // Calculate width of one complete set
+        const firstSetItems = Array.from(this.container.children).slice(0, this.items.length);
+        this.itemWidth = 0;
+
+        firstSetItems.forEach((item, index) => {
+            this.itemWidth += item.offsetWidth;
+            if (index < firstSetItems.length - 1) {
+                this.itemWidth += 32; // gap between items
+            }
+        });
+
+        console.log('One set width:', this.itemWidth);
+    }
+
+    setInitialPosition() {
+        // Start at position where we can scroll both ways
+        const middlePosition = this.itemWidth * Math.floor(this.totalCopies / 2);
+        this.container.scrollLeft = middlePosition;
+        console.log('Set initial scroll to:', middlePosition);
+    }
+
+    attachScrollListener() {
+        this.container.addEventListener('scroll', () => {
+            if (this.isScrolling) return;
+
+            const scrollLeft = this.container.scrollLeft;
+            const resetThreshold = 50;
+
+            // If scrolled too far left (near beginning)
+            if (scrollLeft <= resetThreshold) {
+                this.isScrolling = true;
+                this.container.scrollLeft = scrollLeft + this.itemWidth;
+                setTimeout(() => this.isScrolling = false, 10);
+            }
+
+            // If scrolled too far right (near end)
+            const maxScroll = this.container.scrollWidth - this.container.clientWidth;
+            if (scrollLeft >= maxScroll - resetThreshold) {
+                this.isScrolling = true;
+                this.container.scrollLeft = scrollLeft - this.itemWidth;
+                setTimeout(() => this.isScrolling = false, 10);
+            }
+        });
+    }
+
+    destroy() {
+        this.container.innerHTML = this.originalHTML;
+    }
+}
+
 // Floating Images Screensaver Class
 class FloatingImages {
     constructor() {
@@ -284,6 +403,69 @@ class FloatingImages {
     }
 }
 
+// Image Stack Cycling Class - Support for More Images
+class ImageStack {
+    constructor(stackContainer) {
+        this.container = stackContainer;
+        this.images = Array.from(stackContainer.querySelectorAll('.s-img'));
+        this.currentIndex = 0;
+        this.isAnimating = false;
+
+        this.init();
+    }
+
+    init() {
+        if (this.images.length === 0) return;
+
+        console.log(`Initializing image stack with ${this.images.length} images`);
+
+        // Set initial state
+        this.updateStack();
+
+        // Add click listener to container
+        this.container.addEventListener('click', (e) => {
+            if (!this.isAnimating) {
+                this.nextImage();
+            }
+        });
+    }
+
+    nextImage() {
+        this.isAnimating = true;
+
+        // Move to next image in correct order
+        this.currentIndex = (this.currentIndex + 1) % this.images.length;
+        this.updateStack();
+
+        // Reset animation flag after transition completes
+        setTimeout(() => {
+            this.isAnimating = false;
+        }, 600); // Match CSS transition duration
+    }
+
+    updateStack() {
+        this.images.forEach((img, index) => {
+            // Clear all classes
+            img.classList.remove('active', 'behind-1', 'behind-2', 'behind-3', 'behind-4', 'behind-5', 'behind-6', 'behind-7', 'behind-8');
+
+            // Set classes based on position relative to current active image
+            if (index === this.currentIndex) {
+                img.classList.add('active');
+            } else {
+                // Calculate how far behind this image is from the active one
+                let distance = (index - this.currentIndex + this.images.length) % this.images.length;
+
+                if (distance <= 8) {
+                    img.classList.add(`behind-${distance}`);
+                }
+                // Images beyond behind-8 will use the default transform state
+            }
+        });
+
+        console.log(`Active image index: ${this.currentIndex}`);
+    }
+}
+
 // Smooth scroll functionality
 function initSmoothScroll() {
     document.querySelectorAll('a[href^="#"]').forEach(anchor => {
@@ -310,6 +492,98 @@ document.addEventListener('DOMContentLoaded', function() {
     // Initialize floating images screensaver
     const floatingImages = new FloatingImages();
 
+    // Initialize image stacks
+    const imageStacks = document.querySelectorAll('.image-stack');
+    imageStacks.forEach(stack => {
+        new ImageStack(stack);
+    });
+
+    // Initialize TRUE infinite horizontal scroll
+    const infiniteScroll = new TrueInfiniteScroll('#infinite-scroll');
+
+// APPROACH STACK - Alternating image/card
+const approachStack = document.getElementById('approach-stack');
+if (approachStack) {
+    const approaches = [
+        {
+            image: '/images/deep.svg',
+            title: 'Deep Expertise in Web3',
+            text: 'From brand systems to UX to go-to-market, we have guided privacy-native products for years—grounded in how keys, clients, and protocols actually behave in production.'
+        },
+        {
+            image: '/images/culture.svg', 
+            title: 'Privacy as Culture',
+            text: 'Privacy is not a feature; it is culture. Cross-disciplinary by design, we translate real-world needs into products that transform security from niche to normal.'
+        },
+        {
+            image: '/images/team/multi.svg',
+            title: 'Multidisciplinary Team', 
+            text: 'Our team blends expertise in UX/UI, branding, storytelling, and community building. From coding and policy to filmmaking and motion design, we bring a range of skills to every project, ensuring a holistic approach.'
+        }
+    ];
+
+    let currentStep = 0; // 0 = image, 1 = card
+    let currentApproach = 0;
+    let isAnimating = false;
+
+    function updateDisplay() {
+        const approach = approaches[currentApproach];
+        const imageContainer = approachStack.querySelector('.approach-image');
+        const image = approachStack.querySelector('.approach-image img');
+        const card = approachStack.querySelector('.approach-card');
+
+        if (image && card && imageContainer) {
+            // Update content immediately
+            image.src = approach.image;
+            image.alt = approach.title;
+            card.querySelector('h3').textContent = approach.title;
+            card.querySelector('p').textContent = approach.text;
+
+            // Ensure elements are positioned correctly
+            imageContainer.style.position = 'absolute';
+            card.style.position = 'absolute';
+
+            if (currentStep === 0) {
+                // Show image on top
+                imageContainer.style.zIndex = '20';
+                card.style.zIndex = '10';
+                imageContainer.style.opacity = '1';
+                card.style.opacity = '1';
+            } else {
+                // Show card on top
+                imageContainer.style.zIndex = '10';
+                card.style.zIndex = '20';
+                imageContainer.style.opacity = '0.2';
+                card.style.opacity = '1';
+            }
+        }
+    }
+
+    // Initial display
+    updateDisplay();
+
+    approachStack.addEventListener('click', function() {
+        if (isAnimating) return;
+
+        isAnimating = true;
+        currentStep = (currentStep + 1) % 2;
+
+        // If we just finished showing a card, move to next approach
+        if (currentStep === 0) {
+            currentApproach = (currentApproach + 1) % approaches.length;
+        }
+
+        updateDisplay();
+
+        // Reset animation lock after transition
+        setTimeout(() => {
+            isAnimating = false;
+        }, 400);
+    });
+}
+
+
+
     // Initialize smooth scrolling
     initSmoothScroll();
 
@@ -317,7 +591,7 @@ document.addEventListener('DOMContentLoaded', function() {
     document.body.style.opacity = '0';
     document.body.style.transition = 'opacity 0.3s ease-in-out';
 
-    setTimeout(() => {
+    setTimeout(function() {
         document.body.style.opacity = '1';
     }, 100);
 });
