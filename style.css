@@ -7,12 +7,23 @@
   box-sizing: border-box;
 }
 
+html {
+  overflow-x: hidden;
+}
+
+img {
+  max-width: 100%;
+  height: auto;
+}
+
 body {
   font-family: Montaga, sans-serif;
   line-height: 1.6;
   color: #111;
   background: #fff;
   font-size: 16px;
+  overflow-x: hidden;
+  word-wrap: break-word;
 }
 
 .montaga-regular {
@@ -230,15 +241,13 @@ img {
 }
 
 /* ========================================
-   IMAGE STACK FUNCTIONALITY - SMOOTH LAYERED STACKING
+   IMAGE STACK FUNCTIONALITY - CLEAN STACKING ANIMATION
 ======================================== */
 .image-stack {
   position: relative;
   width: 100%;
   height: 600px;
   cursor: pointer;
-  background: none;
-  background-color: transparent;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -257,11 +266,7 @@ img {
   transform: translateY(10px);
   transition: all 0.4s ease;
   pointer-events: none;
-  background: none;
-  background-color: transparent;
   padding: 0.5rem 0;
-  border-radius: 0;
-  box-shadow: none;
 }
 
 .image-stack .s-img {
@@ -272,10 +277,10 @@ img {
   height: calc(100% - 100px);
   display: flex;
   flex-direction: column;
+  align-items: center;
+  justify-content: center;
   transform-origin: center center;
-  background: none;
-  background-color: transparent;
-  transition: all 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  transition: all 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94);
 }
 
 .image-stack .s-img img {
@@ -283,7 +288,7 @@ img {
   height: 100%;
   object-fit: contain;
   border-radius: 12px;
-  transition: all 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  transition: all 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94);
   transform-origin: center center;
   box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
 }
@@ -291,14 +296,14 @@ img {
 /* Default stacked state - all images start behind with varying sizes */
 .image-stack .s-img {
   z-index: 1;
-  transform: translate(-50%, -50%) scale(0.75) translateY(20px) translateX(50%);
-  opacity: 0.6;
+  transform: translate(-50%, -50%) scale(0.7) translateY(30px);
+  opacity: 0.5;
 }
 
 /* Active image comes to front with full size and opacity */
 .image-stack .s-img.active {
   z-index: 10;
-  transform: translate(-50%, -50%) scale(1) translateY(0px) translateX(50%);
+  transform: translate(-50%, -50%) scale(1) translateY(0px);
   opacity: 1;
 }
 
@@ -306,11 +311,11 @@ img {
   box-shadow: 0 8px 30px rgba(0, 0, 0, 0.15);
 }
 
-/* Behind states - smooth size progression with slight offsets */
+/* Behind states - smooth size progression with vertical offsets */
 .image-stack .s-img.behind-1 {
   z-index: 9;
-  transform: translate(-50%, -50%) scale(0.85) translateY(8px) translateX(50%);
-  opacity: 0.8;
+  transform: translate(-50%, -50%) scale(0.8) translateY(15px);
+  opacity: 0.7;
 }
 
 .image-stack .s-img.behind-1 img {
@@ -319,8 +324,8 @@ img {
 
 .image-stack .s-img.behind-2 {
   z-index: 8;
-  transform: translate(-50%, -50%) scale(0.8) translateY(12px) translateX(50%);
-  opacity: 0.7;
+  transform: translate(-50%, -50%) scale(0.75) translateY(20px);
+  opacity: 0.6;
 }
 
 .image-stack .s-img.behind-2 img {
@@ -329,22 +334,12 @@ img {
 
 .image-stack .s-img.behind-3 {
   z-index: 7;
-  transform: translate(-50%, -50%) scale(0.78) translateY(16px) translateX(50%);
-  opacity: 0.65;
+  transform: translate(-50%, -50%) scale(0.72) translateY(25px);
+  opacity: 0.55;
 }
 
 .image-stack .s-img.behind-3 img {
   box-shadow: 0 4px 18px rgba(0, 0, 0, 0.08);
-}
-
-.image-stack .s-img.behind-4 {
-  z-index: 6;
-  transform: translate(-50%, -50%) scale(0.76) translateY(18px) translateX(50%);
-  opacity: 0.6;
-}
-
-.image-stack .s-img.behind-4 img {
-  box-shadow: 0 3px 15px rgba(0, 0, 0, 0.06);
 }
 
 /* Show description only for active image */
@@ -449,12 +444,8 @@ img {
 }
 
 .horizontal-scroll-container {
-  width: 100vw;
+  width: 100%;
   position: relative;
-  left: 50%;
-  right: 50%;
-  margin-left: -50vw;
-  margin-right: -50vw;
   overflow: hidden;
 }
 
@@ -1037,7 +1028,7 @@ footer a:first-child {
 
   .horizontal-scroll {
     padding: 0 0 1rem 0;
-    margin-left: -125px;
+    margin-left: 0;
   }
 
   .scroll-item img {
@@ -1233,29 +1224,23 @@ footer a:first-child {
 
   /* Mobile responsive transforms - maintain smooth stacking */
   .image-stack .s-img {
-    transform: translate(-50%, -50%) scale(0.7) translateY(15px) translateX(50%);
+    transform: translate(-50%, -50%) scale(0.65) translateY(20px);
   }
 
   .image-stack .s-img.active {
-    transform: translate(-50%, -50%) scale(0.95) translateY(0px) translateX(50%);
+    transform: translate(-50%, -50%) scale(0.9) translateY(0px);
   }
 
   .image-stack .s-img.behind-1 {
-    transform: translate(-50%, -50%) scale(0.8) translateY(6px) translateX(50%);
+    transform: translate(-50%, -50%) scale(0.75) translateY(10px);
   }
 
   .image-stack .s-img.behind-2 {
-    transform: translate(-50%, -50%) scale(0.75) translateY(9px) translateX(50%);
+    transform: translate(-50%, -50%) scale(0.7) translateY(15px);
   }
 
   .image-stack .s-img.behind-3 {
-    transform: translate(-50%, -50%) scale(0.73) translateY(12px)
-      translateX(50%);
-  }
-
-  .image-stack .s-img.behind-4 {
-    transform: translate(-50%, -50%) scale(0.71) translateY(14px)
-      translateX(50%);
+    transform: translate(-50%, -50%) scale(0.68) translateY(18px);
   }
 
   .service-img {
@@ -1276,7 +1261,7 @@ footer a:first-child {
   .horizontal-scroll {
     gap: 1.5rem;
     max-height: 320px;
-    margin-left: -100px;
+    margin-left: 0;
     padding: 0 0 1rem 0;
   }
 
@@ -1371,7 +1356,7 @@ footer a:first-child {
   .horizontal-scroll {
     gap: 1rem;
     max-height: 280px;
-    margin-left: -90px;
+    margin-left: 0;
     padding: 0 0 1rem 0;
   }
 
@@ -1487,31 +1472,30 @@ footer a:first-child {
 
   /* Even smaller transforms for very small screens */
   .image-stack .s-img {
-    transform: translate(-50%, -50%) scale(0.65) translateY(12px)
-      translateX(50%);
+    transform: translate(-50%, -50%) scale(0.6) translateY(15px);
   }
 
   .image-stack .s-img.active {
-    transform: translate(-50%, -50%) scale(0.9) translateY(0px) translateX(50%);
+    transform: translate(-50%, -50%) scale(0.85) translateY(0px);
   }
 
   .image-stack .s-img.behind-1 {
-    transform: translate(-50%, -50%) scale(0.75) translateY(5px) translateX(50%);
+    transform: translate(-50%, -50%) scale(0.7) translateY(8px);
   }
 
   .image-stack .s-img.behind-2 {
-    transform: translate(-50%, -50%) scale(0.7) translateY(7px) translateX(50%);
+    transform: translate(-50%, -50%) scale(0.65) translateY(12px);
   }
 
   .image-stack .s-img.behind-3 {
-    transform: translate(-50%, -50%) scale(0.68) translateY(9px) translateX(50%);
+    transform: translate(-50%, -50%) scale(0.63) translateY(15px);
   }
 
   /* Mission Section - Extra Small Mobile */
   .horizontal-scroll {
     gap: 0.8rem;
     max-height: 240px;
-    margin-left: -80px;
+    margin-left: 0;
     padding: 0 0 1rem 0;
   }
 
