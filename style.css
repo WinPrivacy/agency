@@ -14,6 +14,10 @@ html {
 img {
   max-width: 100%;
   height: auto;
+  /* Performance optimizations */
+  will-change: transform;
+  backface-visibility: hidden;
+  transform: translateZ(0);
 }
 
 body {
