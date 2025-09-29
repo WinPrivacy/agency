@@ -291,14 +291,14 @@ img {
 /* Default stacked state - all images start behind with varying sizes */
 .image-stack .s-img {
   z-index: 1;
-  transform: translate(-50%, -50%) scale(0.75) translateY(20px);
+  transform: translate(-50%, -50%) scale(0.75) translateY(20px) translateX(50%);
   opacity: 0.6;
 }
 
 /* Active image comes to front with full size and opacity */
 .image-stack .s-img.active {
   z-index: 10;
-  transform: translate(-50%, -50%) scale(1) translateY(0px);
+  transform: translate(-50%, -50%) scale(1) translateY(0px) translateX(50%);
   opacity: 1;
 }
 
@@ -309,7 +309,7 @@ img {
 /* Behind states - smooth size progression with slight offsets */
 .image-stack .s-img.behind-1 {
   z-index: 9;
-  transform: translate(-50%, -50%) scale(0.85) translateY(8px);
+  transform: translate(-50%, -50%) scale(0.85) translateY(8px) translateX(50%);
   opacity: 0.8;
 }
 
@@ -319,7 +319,7 @@ img {
 
 .image-stack .s-img.behind-2 {
   z-index: 8;
-  transform: translate(-50%, -50%) scale(0.8) translateY(12px);
+  transform: translate(-50%, -50%) scale(0.8) translateY(12px) translateX(50%);
   opacity: 0.7;
 }
 
@@ -329,7 +329,7 @@ img {
 
 .image-stack .s-img.behind-3 {
   z-index: 7;
-  transform: translate(-50%, -50%) scale(0.78) translateY(16px);
+  transform: translate(-50%, -50%) scale(0.78) translateY(16px) translateX(50%);
   opacity: 0.65;
 }
 
@@ -339,7 +339,7 @@ img {
 
 .image-stack .s-img.behind-4 {
   z-index: 6;
-  transform: translate(-50%, -50%) scale(0.76) translateY(18px);
+  transform: translate(-50%, -50%) scale(0.76) translateY(18px) translateX(50%);
   opacity: 0.6;
 }
 
@@ -1198,27 +1198,29 @@ footer a:first-child {
 
   /* Mobile responsive transforms - maintain smooth stacking */
   .image-stack .s-img {
-    transform: translate(-50%, -50%) scale(0.7) translateY(15px);
+    transform: translate(-50%, -50%) scale(0.7) translateY(15px) translateX(50%);
   }
 
   .image-stack .s-img.active {
-    transform: translate(-50%, -50%) scale(0.95) translateY(0px);
+    transform: translate(-50%, -50%) scale(0.95) translateY(0px) translateX(50%);
   }
 
   .image-stack .s-img.behind-1 {
-    transform: translate(-50%, -50%) scale(0.8) translateY(6px);
+    transform: translate(-50%, -50%) scale(0.8) translateY(6px) translateX(50%);
   }
 
   .image-stack .s-img.behind-2 {
-    transform: translate(-50%, -50%) scale(0.75) translateY(9px);
+    transform: translate(-50%, -50%) scale(0.75) translateY(9px) translateX(50%);
   }
 
   .image-stack .s-img.behind-3 {
-    transform: translate(-50%, -50%) scale(0.73) translateY(12px);
+    transform: translate(-50%, -50%) scale(0.73) translateY(12px)
+      translateX(50%);
   }
 
   .image-stack .s-img.behind-4 {
-    transform: translate(-50%, -50%) scale(0.71) translateY(14px);
+    transform: translate(-50%, -50%) scale(0.71) translateY(14px)
+      translateX(50%);
   }
 
   .service-img {
@@ -1436,23 +1438,24 @@ footer a:first-child {
 
   /* Even smaller transforms for very small screens */
   .image-stack .s-img {
-    transform: translate(-50%, -50%) scale(0.65) translateY(12px);
+    transform: translate(-50%, -50%) scale(0.65) translateY(12px)
+      translateX(50%);
   }
 
   .image-stack .s-img.active {
-    transform: translate(-50%, -50%) scale(0.9) translateY(0px);
+    transform: translate(-50%, -50%) scale(0.9) translateY(0px) translateX(50%);
   }
 
   .image-stack .s-img.behind-1 {
-    transform: translate(-50%, -50%) scale(0.75) translateY(5px);
+    transform: translate(-50%, -50%) scale(0.75) translateY(5px) translateX(50%);
   }
 
   .image-stack .s-img.behind-2 {
-    transform: translate(-50%, -50%) scale(0.7) translateY(7px);
+    transform: translate(-50%, -50%) scale(0.7) translateY(7px) translateX(50%);
   }
 
   .image-stack .s-img.behind-3 {
-    transform: translate(-50%, -50%) scale(0.68) translateY(9px);
+    transform: translate(-50%, -50%) scale(0.68) translateY(9px) translateX(50%);
   }
 
   /* Mission Section - Extra Small Mobile */
