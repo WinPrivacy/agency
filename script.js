@@ -684,3 +684,50 @@ window.addEventListener("beforeunload", function () {
     window.marquee.destroy();
   }
 });
+
+// Team section image debugging
+document.addEventListener("DOMContentLoaded", function () {
+  const teamImages = document.querySelectorAll(".team-member img");
+  console.log("🔍 Found", teamImages.length, "team member images");
+
+  teamImages.forEach((img, index) => {
+    console.log(`Image ${index + 1}:`, img.src);
+
+    // Test if image loads
+    img.addEventListener("load", function () {
+      console.log("✅ Successfully loaded:", this.src);
+    });
+
+    img.addEventListener("error", function () {
+      console.log("❌ Failed to load:", this.src);
+
+      // Try alternative paths
+      const altPaths = [
+        `./images/team/${this.alt.toLowerCase()}.png`,
+        `images/team/${this.alt.toLowerCase()}.png`,
+        `/images/team/${this.alt.toLowerCase()}.png`,
+      ];
+
+      console.log("🔄 Trying alternative paths for", this.alt);
+      tryAlternativePath(this, altPaths, 0);
+    });
+  });
+});
+
+function tryAlternativePath(img, paths, index) {
+  if (index >= paths.length) {
+    console.log("💥 All alternative paths failed for", img.alt);
+    return;
+  }
+
+  const testImg = new Image();
+  testImg.onload = function () {
+    console.log("✅ Alternative path works:", paths[index]);
+    img.src = paths[index];
+  };
+  testImg.onerror = function () {
+    console.log("❌ Alternative path failed:", paths[index]);
+    tryAlternativePath(img, paths, index + 1);
+  };
+  testImg.src = paths[index];
+}
