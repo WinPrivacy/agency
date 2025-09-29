@@ -570,86 +570,100 @@ document.addEventListener("DOMContentLoaded", function () {
   // Initialize TRUE infinite horizontal scroll
   const infiniteScroll = new TrueInfiniteScroll("#infinite-scroll");
 
-  // APPROACH STACK - Alternating image/card
-  const approachStack = document.getElementById("approach-stack");
-  if (approachStack) {
-    const approaches = [
-      {
-        image: "/images/deep.svg",
-        title: "Deep Expertise in Web3",
-        text: "From brand systems to UX to go-to-market, we have guided privacy-native products for years—grounded in how keys, clients, and protocols actually behave in production.",
-      },
-      {
-        image: "/images/culture.svg",
-        title: "Privacy as Culture",
-        text: "Privacy is not a feature; it is culture. Cross-disciplinary by design, we translate real-world needs into products that transform security from niche to normal.",
-      },
-      {
-        image: "/images/team/multi.svg",
-        title: "Multidisciplinary Team",
-        text: "Our team blends expertise in UX/UI, branding, storytelling, and community building. From coding and policy to filmmaking and motion design, we bring a range of skills to every project, ensuring a holistic approach.",
-      },
-    ];
+  // APPROACH STACKED CARDS - Scroll Animation
+  class ApproachCards {
+    constructor() {
+      this.cards = document.querySelectorAll(".approach-card");
+      this.container = document.querySelector(".approach-container");
+      this.visibleCards = new Set();
+      this.isAnimating = false;
 
-    let currentStep = 0; // 0 = image, 1 = card
-    let currentApproach = 0;
-    let isAnimating = false;
+      if (this.cards.length === 0) return;
 
-    function updateDisplay() {
-      const approach = approaches[currentApproach];
-      const imageContainer = approachStack.querySelector(".approach-image");
-      const image = approachStack.querySelector(".approach-image img");
-      const card = approachStack.querySelector(".approach-card");
-
-      if (image && card && imageContainer) {
-        // Update content immediately
-        image.src = approach.image;
-        image.alt = approach.title;
-        card.querySelector("h3").textContent = approach.title;
-        card.querySelector("p").textContent = approach.text;
-
-        // Ensure elements are positioned correctly
-        imageContainer.style.position = "absolute";
-        card.style.position = "absolute";
-
-        if (currentStep === 0) {
-          // Show image on top
-          imageContainer.style.zIndex = "20";
-          card.style.zIndex = "10";
-          imageContainer.style.opacity = "1";
-          card.style.opacity = "1";
-        } else {
-          // Show card on top
-          imageContainer.style.zIndex = "10";
-          card.style.zIndex = "20";
-          imageContainer.style.opacity = "0.2";
-          card.style.opacity = "1";
-        }
-      }
+      this.init();
     }
 
-    // Initial display
-    updateDisplay();
+    init() {
+      // Set up intersection observer for scroll-triggered animations
+      this.setupIntersectionObserver();
 
-    approachStack.addEventListener("click", function () {
-      if (isAnimating) return;
+      // Add click handlers for card interactions
+      this.setupClickHandlers();
+    }
 
-      isAnimating = true;
-      currentStep = (currentStep + 1) % 2;
+    setupIntersectionObserver() {
+      const options = {
+        root: null,
+        rootMargin: "0px 0px -20% 0px",
+        threshold: 0.1,
+      };
 
-      // If we just finished showing a card, move to next approach
-      if (currentStep === 0) {
-        currentApproach = (currentApproach + 1) % approaches.length;
-      }
+      this.observer = new IntersectionObserver((entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            this.animateCardIn(entry.target);
+          }
+        });
+      }, options);
 
-      updateDisplay();
+      this.cards.forEach((card) => {
+        this.observer.observe(card);
+      });
+    }
 
-      // Reset animation lock after transition
+    animateCardIn(card) {
+      const approachIndex = parseInt(card.dataset.approach);
+
+      if (this.visibleCards.has(approachIndex)) return;
+
+      this.visibleCards.add(approachIndex);
+
+      // Stagger the animation based on card index
       setTimeout(() => {
-        isAnimating = false;
-      }, 400);
-    });
+        card.classList.add("visible");
+      }, approachIndex * 300); // 300ms delay between each card
+    }
+
+    setupClickHandlers() {
+      this.cards.forEach((card) => {
+        card.addEventListener("click", () => {
+          this.handleCardClick(card);
+        });
+      });
+    }
+
+    handleCardClick(clickedCard) {
+      if (this.isAnimating) return;
+
+      this.isAnimating = true;
+      const clickedIndex = parseInt(clickedCard.dataset.approach);
+
+      // Bring clicked card to front
+      clickedCard.style.zIndex = "10";
+
+      // Reset other cards z-index
+      this.cards.forEach((card) => {
+        if (card !== clickedCard) {
+          const cardIndex = parseInt(card.dataset.approach);
+          card.style.zIndex = cardIndex.toString();
+        }
+      });
+
+      // Reset animation lock
+      setTimeout(() => {
+        this.isAnimating = false;
+      }, 300);
+    }
+
+    destroy() {
+      if (this.observer) {
+        this.observer.disconnect();
+      }
+    }
   }
+
+  // Initialize approach cards
+  const approachCards = new ApproachCards();
 
   // Initialize smooth scrolling
   initSmoothScroll();

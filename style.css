@@ -658,7 +658,7 @@ img {
 }
 
 /* ========================================
-   APPROACH - STACKED IMAGE + TILTED CARD
+   APPROACH - STACKED CARDS ANIMATION
 ======================================== */
 .approach {
   padding: 100px 0;
@@ -684,111 +684,135 @@ img {
   font-size: 2.5rem;
 }
 
-.approach-stack {
+.approach-container {
   position: relative;
-  width: 600px;
-  /* height: 600px; */
-  height: 500px;
-  cursor: pointer;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: flex-start;
-  margin-top: 2rem;
-}
-
-.approach-image {
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
   width: 100%;
-  /* height: 350px; */
-  height: auto;
+  max-width: 600px;
+  height: 80vh;
+  min-height: 600px;
   display: flex;
   align-items: center;
   justify-content: center;
-  z-index: 10;
-  transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+.approach-card {
+  position: absolute;
+  width: 100%;
+  max-width: 500px;
+  left: 50%;
+  transform: translateX(-50%) translateY(100%);
+  opacity: 0;
+  transition: transform 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94),
+    opacity 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  background: #fff;
+  border-radius: 16px;
+  padding: 2rem;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+  border: 1px solid rgba(0, 0, 0, 0.05);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  cursor: pointer;
+}
+
+.approach-card.visible {
+  transform: translateX(-50%) translateY(0);
+  opacity: 1;
+}
+
+/* Stacking effect with slight rotation and offset */
+.approach-card[data-approach="0"] {
+  z-index: 3;
+  transform: translateX(-50%) translateY(100%) rotate(0deg);
+}
+
+.approach-card[data-approach="0"].visible {
+  transform: translateX(-50%) translateY(0) rotate(0deg);
+}
+
+.approach-card[data-approach="1"] {
+  z-index: 2;
+  transform: translateX(-50%) translateY(100%) rotate(2deg);
+}
+
+.approach-card[data-approach="1"].visible {
+  transform: translateX(-50%) translateY(-20px) rotate(2deg);
+}
+
+.approach-card[data-approach="2"] {
+  z-index: 1;
+  transform: translateX(-50%) translateY(100%) rotate(-1deg);
+}
+
+.approach-card[data-approach="2"].visible {
+  transform: translateX(-50%) translateY(-40px) rotate(-1deg);
+}
+
+.approach-image {
+  width: 80px;
+  height: 80px;
+  margin-bottom: 1.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .approach-image img {
   width: 100%;
   height: 100%;
   object-fit: contain;
-  border-radius: 12px;
-  transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  border-radius: 8px;
 }
 
-.approach-card {
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  width: 100%;
-  /* height: 375px; */
-  height: 350px;
-  background: rgb(225, 225, 225);
-  border-radius: 12px;
-  padding: 1.8rem 2rem 2rem 2rem;
-  box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 20px 0px;
-  transform: rotate(8deg);
-  z-index: 5;
-  transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
-  display: flex;
-  flex-direction: column;
-  justify-content: flex-start;
-  text-align: left;
-}
-
-.approach-card h3 {
-  font-size: 2rem;
+.approach-content h3 {
+  font-size: 1.8rem;
   line-height: 1.2;
   color: #111;
   font-weight: 500;
-  margin-bottom: 1.5rem;
+  margin-bottom: 1rem;
 }
 
-.approach-card p {
-  line-height: 1.5;
-  color: #111;
+.approach-content p {
+  line-height: 1.6;
+  color: #666;
   margin: 0;
-  font-size: 1.25rem;
+  font-size: 1rem;
 }
 
-.approach-stack:hover .approach-image {
-  transform: translateY(-5px);
-}
-
-.approach-stack:hover .approach-card {
-  transform: rotate(8deg) translateY(-5px);
-  box-shadow: rgba(0, 0, 0, 0.15) 0px 8px 25px 0px;
+/* Hover effects */
+.approach-card:hover {
+  transform: translateX(-50%) translateY(-10px) !important;
+  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.15);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 
 /* Mobile Responsive */
 @media (max-width: 1024px) {
-  .approach-stack {
-    width: 450px;
-    height: 550px;
-  }
-
-  .approach-image {
-    height: 300px;
+  .approach-container {
+    max-width: 500px;
+    height: 70vh;
+    min-height: 500px;
   }
 
   .approach-card {
-    top: 80px;
-    height: 320px;
-    padding: 2.5rem 1.5rem 1.5rem 1.5rem;
+    max-width: 400px;
+    padding: 1.5rem;
   }
 
-  .approach-card h3 {
-    font-size: 1.8rem;
+  .approach-image {
+    width: 60px;
+    height: 60px;
     margin-bottom: 1rem;
   }
 
-  .approach-card p {
-    font-size: 1.1rem;
+  .approach-content h3 {
+    font-size: 1.5rem;
+    margin-bottom: 0.8rem;
+  }
+
+  .approach-content p {
+    font-size: 0.9rem;
   }
 }
 
@@ -798,28 +822,30 @@ img {
     margin-bottom: 2rem;
   }
 
-  .approach-stack {
-    width: 350px;
-    height: 450px;
-  }
-
-  .approach-image {
-    height: 250px;
+  .approach-container {
+    max-width: 400px;
+    height: 60vh;
+    min-height: 400px;
   }
 
   .approach-card {
-    top: 60px;
-    height: 280px;
-    padding: 2rem 1.5rem 1rem 1.5rem;
+    max-width: 350px;
+    padding: 1.2rem;
   }
 
-  .approach-card h3 {
-    font-size: 1.5rem;
-    margin-bottom: 1rem;
+  .approach-image {
+    width: 50px;
+    height: 50px;
+    margin-bottom: 0.8rem;
   }
 
-  .approach-card p {
-    font-size: 1rem;
+  .approach-content h3 {
+    font-size: 1.3rem;
+    margin-bottom: 0.6rem;
+  }
+
+  .approach-content p {
+    font-size: 0.85rem;
   }
 }
 
@@ -832,28 +858,30 @@ img {
     font-size: 1.8rem;
   }
 
-  .approach-stack {
-    width: 300px;
-    height: 400px;
-  }
-
-  .approach-image {
-    height: 200px;
+  .approach-container {
+    max-width: 320px;
+    height: 50vh;
+    min-height: 350px;
   }
 
   .approach-card {
-    top: 40px;
-    height: 250px;
-    padding: 1.5rem 1rem 1rem 1rem;
+    max-width: 300px;
+    padding: 1rem;
   }
 
-  .approach-card h3 {
-    font-size: 1.3rem;
-    margin-bottom: 0.8rem;
+  .approach-image {
+    width: 40px;
+    height: 40px;
+    margin-bottom: 0.6rem;
   }
 
-  .approach-card p {
-    font-size: 0.9rem;
+  .approach-content h3 {
+    font-size: 1.1rem;
+    margin-bottom: 0.5rem;
+  }
+
+  .approach-content p {
+    font-size: 0.8rem;
   }
 }
 
