@@ -611,10 +611,17 @@ img {
 .team-member img {
   width: 220px;
   height: 220px;
+  border-radius: 50%;
   object-fit: cover;
   object-position: center;
+  border: 3px solid #e8e8e8;
   margin-bottom: 1rem;
   transition: border-color 0.3s ease;
+  /* Force consistent dimensions */
+  min-width: 220px;
+  min-height: 220px;
+  max-width: 220px;
+  max-height: 220px;
 }
 
 .team-member:hover img {
