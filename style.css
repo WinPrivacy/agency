@@ -570,7 +570,7 @@ img {
 
 .first {
   display: flex;
-  flex-wrap: wrap;
+  flex-wrap: nowrap;
 }
 
 .team-member {
