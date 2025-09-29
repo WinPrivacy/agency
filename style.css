@@ -628,26 +628,33 @@ img {
   display: flex;
   flex-direction: row;
   align-items: center;
-  transition: all ease-out 0.5s;
+  justify-content: space-between;
+  transition: all ease-out 0.3s;
+  position: relative;
+  padding: 0.5rem 0;
 }
 
 .service-img {
   width: 86px;
   height: auto;
-  display: none;
-  transition: all ease-out 0.5s;
+  opacity: 0;
+  transform: scale(0.9) translateX(20px);
+  transition: all ease-out 0.3s;
+  position: absolute;
+  right: 0;
+  pointer-events: none;
 }
 
 .service-item:hover .service-img {
-  scale: 2;
-  transition: all ease-out 0.5s;
-  display: flex;
-  position: absolute;
+  opacity: 1;
+  transform: scale(1.1) translateX(0px);
+  transition: all ease-out 0.3s;
 }
 
 .service-text {
   padding-left: 0.4rem;
   align-self: center;
+  transition: all ease-out 0.3s;
 }
 
 /* ========================================
@@ -1225,6 +1232,11 @@ footer a:first-child {
 
   .service-img {
     width: 48px;
+    transform: scale(0.9) translateX(15px);
+  }
+
+  .service-item:hover .service-img {
+    transform: scale(1.05) translateX(0px);
   }
 
   /* Mission Section - Mobile */
@@ -1388,6 +1400,15 @@ footer a:first-child {
 
   .services-grid {
     padding: 0 1rem;
+  }
+
+  .service-img {
+    width: 40px;
+    transform: scale(0.9) translateX(10px);
+  }
+
+  .service-item:hover .service-img {
+    transform: scale(1.05) translateX(0px);
   }
 
   .approach {
