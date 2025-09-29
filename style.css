@@ -566,10 +566,6 @@ img {
 .team .container {
   display: flex;
   flex-direction: row;
-}
-
-.first {
-  display: flex;
   flex-wrap: nowrap;
 }
 
