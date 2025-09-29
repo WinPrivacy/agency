@@ -20,6 +20,18 @@ img {
   transform: translateZ(0);
 }
 
+/* Video optimizations */
+video {
+  max-width: 100%;
+  height: auto;
+  /* Performance optimizations */
+  will-change: transform;
+  backface-visibility: hidden;
+  transform: translateZ(0);
+  /* Ensure videos don't interfere with layout */
+  display: block;
+}
+
 body {
   font-family: Montaga, sans-serif;
   line-height: 1.6;
@@ -499,7 +511,8 @@ img {
   transform: translateY(-5px);
 }
 
-.scroll-item img {
+.scroll-item img,
+.scroll-item video {
   max-height: 450px;
   width: auto;
   min-width: 300px;
@@ -510,23 +523,33 @@ img {
 
 /* Individual item height variations for organic feel */
 .scroll-item:nth-child(1) img,
-.scroll-item:nth-child(6) img {
+.scroll-item:nth-child(1) video,
+.scroll-item:nth-child(6) img,
+.scroll-item:nth-child(6) video {
   max-height: 420px;
 }
 .scroll-item:nth-child(2) img,
-.scroll-item:nth-child(7) img {
+.scroll-item:nth-child(2) video,
+.scroll-item:nth-child(7) img,
+.scroll-item:nth-child(7) video {
   max-height: 480px;
 }
 .scroll-item:nth-child(3) img,
-.scroll-item:nth-child(8) img {
+.scroll-item:nth-child(3) video,
+.scroll-item:nth-child(8) img,
+.scroll-item:nth-child(8) video {
   max-height: 380px;
 }
 .scroll-item:nth-child(4) img,
-.scroll-item:nth-child(9) img {
+.scroll-item:nth-child(4) video,
+.scroll-item:nth-child(9) img,
+.scroll-item:nth-child(9) video {
   max-height: 450px;
 }
 .scroll-item:nth-child(5) img,
-.scroll-item:nth-child(10) img {
+.scroll-item:nth-child(5) video,
+.scroll-item:nth-child(10) img,
+.scroll-item:nth-child(10) video {
   max-height: 500px;
 }
 
@@ -1035,29 +1058,40 @@ footer a:first-child {
     margin-left: 0;
   }
 
-  .scroll-item img {
+  .scroll-item img,
+  .scroll-item video {
     max-height: 350px;
     min-width: 250px;
   }
 
   .scroll-item:nth-child(1) img,
-  .scroll-item:nth-child(6) img {
+  .scroll-item:nth-child(1) video,
+  .scroll-item:nth-child(6) img,
+  .scroll-item:nth-child(6) video {
     max-height: 320px;
   }
   .scroll-item:nth-child(2) img,
-  .scroll-item:nth-child(7) img {
+  .scroll-item:nth-child(2) video,
+  .scroll-item:nth-child(7) img,
+  .scroll-item:nth-child(7) video {
     max-height: 380px;
   }
   .scroll-item:nth-child(3) img,
-  .scroll-item:nth-child(8) img {
+  .scroll-item:nth-child(3) video,
+  .scroll-item:nth-child(8) img,
+  .scroll-item:nth-child(8) video {
     max-height: 280px;
   }
   .scroll-item:nth-child(4) img,
-  .scroll-item:nth-child(9) img {
+  .scroll-item:nth-child(4) video,
+  .scroll-item:nth-child(9) img,
+  .scroll-item:nth-child(9) video {
     max-height: 350px;
   }
   .scroll-item:nth-child(5) img,
-  .scroll-item:nth-child(10) img {
+  .scroll-item:nth-child(5) video,
+  .scroll-item:nth-child(10) img,
+  .scroll-item:nth-child(10) video {
     max-height: 400px;
   }
 }
@@ -1269,29 +1303,40 @@ footer a:first-child {
     padding: 0 0 1rem 0;
   }
 
-  .scroll-item img {
+  .scroll-item img,
+  .scroll-item video {
     max-height: 280px;
     min-width: 200px;
   }
 
   .scroll-item:nth-child(1) img,
-  .scroll-item:nth-child(6) img {
+  .scroll-item:nth-child(1) video,
+  .scroll-item:nth-child(6) img,
+  .scroll-item:nth-child(6) video {
     max-height: 250px;
   }
   .scroll-item:nth-child(2) img,
-  .scroll-item:nth-child(7) img {
+  .scroll-item:nth-child(2) video,
+  .scroll-item:nth-child(7) img,
+  .scroll-item:nth-child(7) video {
     max-height: 310px;
   }
   .scroll-item:nth-child(3) img,
-  .scroll-item:nth-child(8) img {
+  .scroll-item:nth-child(3) video,
+  .scroll-item:nth-child(8) img,
+  .scroll-item:nth-child(8) video {
     max-height: 220px;
   }
   .scroll-item:nth-child(4) img,
-  .scroll-item:nth-child(9) img {
+  .scroll-item:nth-child(4) video,
+  .scroll-item:nth-child(9) img,
+  .scroll-item:nth-child(9) video {
     max-height: 280px;
   }
   .scroll-item:nth-child(5) img,
-  .scroll-item:nth-child(10) img {
+  .scroll-item:nth-child(5) video,
+  .scroll-item:nth-child(10) img,
+  .scroll-item:nth-child(10) video {
     max-height: 320px;
   }
 
@@ -1364,29 +1409,40 @@ footer a:first-child {
     padding: 0 0 1rem 0;
   }
 
-  .scroll-item img {
+  .scroll-item img,
+  .scroll-item video {
     max-height: 240px;
     min-width: 180px;
   }
 
   .scroll-item:nth-child(1) img,
-  .scroll-item:nth-child(6) img {
+  .scroll-item:nth-child(1) video,
+  .scroll-item:nth-child(6) img,
+  .scroll-item:nth-child(6) video {
     max-height: 220px;
   }
   .scroll-item:nth-child(2) img,
-  .scroll-item:nth-child(7) img {
+  .scroll-item:nth-child(2) video,
+  .scroll-item:nth-child(7) img,
+  .scroll-item:nth-child(7) video {
     max-height: 270px;
   }
   .scroll-item:nth-child(3) img,
-  .scroll-item:nth-child(8) img {
+  .scroll-item:nth-child(3) video,
+  .scroll-item:nth-child(8) img,
+  .scroll-item:nth-child(8) video {
     max-height: 190px;
   }
   .scroll-item:nth-child(4) img,
-  .scroll-item:nth-child(9) img {
+  .scroll-item:nth-child(4) video,
+  .scroll-item:nth-child(9) img,
+  .scroll-item:nth-child(9) video {
     max-height: 240px;
   }
   .scroll-item:nth-child(5) img,
-  .scroll-item:nth-child(10) img {
+  .scroll-item:nth-child(5) video,
+  .scroll-item:nth-child(10) img,
+  .scroll-item:nth-child(10) video {
     max-height: 280px;
   }
 
@@ -1503,29 +1559,40 @@ footer a:first-child {
     padding: 0 0 1rem 0;
   }
 
-  .scroll-item img {
+  .scroll-item img,
+  .scroll-item video {
     max-height: 200px;
     min-width: 160px;
   }
 
   .scroll-item:nth-child(1) img,
-  .scroll-item:nth-child(6) img {
+  .scroll-item:nth-child(1) video,
+  .scroll-item:nth-child(6) img,
+  .scroll-item:nth-child(6) video {
     max-height: 180px;
   }
   .scroll-item:nth-child(2) img,
-  .scroll-item:nth-child(7) img {
+  .scroll-item:nth-child(2) video,
+  .scroll-item:nth-child(7) img,
+  .scroll-item:nth-child(7) video {
     max-height: 220px;
   }
   .scroll-item:nth-child(3) img,
-  .scroll-item:nth-child(8) img {
+  .scroll-item:nth-child(3) video,
+  .scroll-item:nth-child(8) img,
+  .scroll-item:nth-child(8) video {
     max-height: 160px;
   }
   .scroll-item:nth-child(4) img,
-  .scroll-item:nth-child(9) img {
+  .scroll-item:nth-child(4) video,
+  .scroll-item:nth-child(9) img,
+  .scroll-item:nth-child(9) video {
     max-height: 200px;
   }
   .scroll-item:nth-child(5) img,
-  .scroll-item:nth-child(10) img {
+  .scroll-item:nth-child(5) video,
+  .scroll-item:nth-child(10) img,
+  .scroll-item:nth-child(10) video {
     max-height: 240px;
   }
 }
