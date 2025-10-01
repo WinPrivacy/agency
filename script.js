@@ -102,6 +102,125 @@ class InfiniteMarquee {
     }
 }
 
+// True Infinite Horizontal Scroll Class
+class TrueInfiniteScroll {
+    constructor(selector) {
+        this.container = document.querySelector(selector);
+        if (!this.container) return;
+
+        this.originalHTML = this.container.innerHTML;
+        this.items = [];
+        this.itemWidth = 0;
+        this.totalCopies = 5; // Number of copies to create
+        this.isScrolling = false;
+
+        this.init();
+    }
+
+    init() {
+        console.log('Initializing true infinite scroll...');
+
+        // Store original items data
+        this.storeOriginalItems();
+
+        // Clear container and rebuild with multiple copies
+        this.buildInfiniteItems();
+
+        // Calculate dimensions
+        setTimeout(() => {
+            this.calculateDimensions();
+            this.setInitialPosition();
+            this.attachScrollListener();
+        }, 100);
+    }
+
+    storeOriginalItems() {
+        const originalItems = Array.from(this.container.children);
+        this.items = originalItems.map(item => ({
+            img: item.querySelector('img').src,
+            alt: item.querySelector('img').alt,
+            text: item.querySelector('.desc-text').textContent
+        }));
+        console.log('Stored', this.items.length, 'original items');
+    }
+
+    buildInfiniteItems() {
+        this.container.innerHTML = '';
+
+        // Create multiple sets of items
+        for (let copy = 0; copy < this.totalCopies; copy++) {
+            this.items.forEach(item => {
+                const scrollItem = document.createElement('div');
+                scrollItem.className = 'scroll-item';
+
+                const img = document.createElement('img');
+                img.src = item.img;
+                img.alt = item.alt;
+
+                const text = document.createElement('p');
+                text.className = 'desc-text';
+                text.textContent = item.text;
+
+                scrollItem.appendChild(img);
+                scrollItem.appendChild(text);
+                this.container.appendChild(scrollItem);
+            });
+        }
+
+        console.log('Built', this.container.children.length, 'total items');
+    }
+
+    calculateDimensions() {
+        // Calculate width of one complete set
+        const firstSetItems = Array.from(this.container.children).slice(0, this.items.length);
+        this.itemWidth = 0;
+
+        firstSetItems.forEach((item, index) => {
+            this.itemWidth += item.offsetWidth;
+            if (index < firstSetItems.length - 1) {
+                this.itemWidth += 32; // gap between items
+            }
+        });
+
+        console.log('One set width:', this.itemWidth);
+    }
+
+    setInitialPosition() {
+        // Start at position where we can scroll both ways
+        const middlePosition = this.itemWidth * Math.floor(this.totalCopies / 2);
+        this.container.scrollLeft = middlePosition;
+        console.log('Set initial scroll to:', middlePosition);
+    }
+
+    attachScrollListener() {
+        this.container.addEventListener('scroll', () => {
+            if (this.isScrolling) return;
+
+            const scrollLeft = this.container.scrollLeft;
+            const resetThreshold = 50;
+
+            // If scrolled too far left (near beginning)
+            if (scrollLeft <= resetThreshold) {
+                this.isScrolling = true;
+                this.container.scrollLeft = scrollLeft + this.itemWidth;
+                setTimeout(() => this.isScrolling = false, 10);
+            }
+
+            // If scrolled too far right (near end)
+            const maxScroll = this.container.scrollWidth - this.container.clientWidth;
+            if (scrollLeft >= maxScroll - resetThreshold) {
+                this.isScrolling = true;
+                this.container.scrollLeft = scrollLeft - this.itemWidth;
+                setTimeout(() => this.isScrolling = false, 10);
+            }
+        });
+    }
+
+    destroy() {
+        this.container.innerHTML = this.originalHTML;
+    }
+}
+
 // Floating Images Screensaver Class
 class FloatingImages {
     constructor() {
@@ -284,6 +403,92 @@ class FloatingImages {
     }
 }
 
+// Image Stack Cycling Class - Support for More Images
+class ImageStack {
+            constructor(stackContainer) {
+                this.container = stackContainer;
+                this.images = Array.from(stackContainer.querySelectorAll('.s-img'));
+                this.isAnimating = false;
+                this.init();
+            }
+
+            init() {
+                if (this.images.length === 0) return;
+
+                this.container.addEventListener('click', () => {
+                    if (!this.isAnimating) this.rotateStack();
+                });
+
+                // Set initial z-index based on order
+                this.images.forEach((img, index) => {
+                    gsap.set(img, {
+                        zIndex: this.images.length - index
+                    });
+                });
+            }
+
+            rotateStack() {
+                this.isAnimating = true;
+                const topImage = this.images[0];
+
+                // Animate top image out with rotation and movement
+                const tl = gsap.timeline({
+                    onComplete: () => {
+                        // Move the top image to the back of the array
+                        this.images.push(this.images.shift());
+                        
+                        // Reset the z-indices
+                        this.images.forEach((img, index) => {
+                            gsap.set(img, {
+                                zIndex: this.images.length - index
+                            });
+                        });
+
+                        this.isAnimating = false;
+                    }
+                });
+
+                // Animate top card flying off to the side and back
+                tl.to(topImage, {
+                    x: 200,
+                    y: -100,
+                    rotation: 15,
+                    scale: 0.8,
+                    opacity: 0.5,
+                    duration: 0.4,
+                    ease: "power2.in"
+                })
+                .to(topImage, {
+                    x: 0,
+                    y: 0,
+                    rotation: 0,
+                    scale: 1,
+                    opacity: 1,
+                    duration: 0.3,
+                    ease: "power2.out"
+                });
+
+                // Subtle movement for other cards
+                this.images.slice(1).forEach((img, index) => {
+                    gsap.to(img, {
+                        y: -5,
+                        duration: 0.2,
+                        yoyo: true,
+                        repeat: 1,
+                        delay: index * 0.05,
+                        ease: "power1.inOut"
+                    });
+                });
+            }
+        }
+
+        // Initialize when DOM is ready
+        document.addEventListener('DOMContentLoaded', () => {
+            document.querySelectorAll('.image-stack').forEach(stack => {
+                new ImageStack(stack);
+            });
+        });
+
 // Smooth scroll functionality
 function initSmoothScroll() {
     document.querySelectorAll('a[href^="#"]').forEach(anchor => {
@@ -310,6 +515,71 @@ document.addEventListener('DOMContentLoaded', function() {
     // Initialize floating images screensaver
     const floatingImages = new FloatingImages();
 
+    // Initialize image stacks
+    const imageStacks = document.querySelectorAll('.image-stack');
+    imageStacks.forEach(stack => {
+        new ImageStack(stack);
+    });
+
+    // Initialize TRUE infinite horizontal scroll
+    const infiniteScroll = new TrueInfiniteScroll('#infinite-scroll');
+
+// APPROACH STACK - Alternating image/card (JQUERY)
+(function ($) {
+  $.fn.commentCards = function () {
+    return this.each(function () {
+      var $this = $(this),
+          $cards = $this.find(".card"),
+          $current = $cards.filter(".card--current"),
+          $next;
+
+      if (!$current.length) {
+        $current = $cards.first().addClass("card--current");
+        $next = $current.next().length ? $current.next() : $cards.first();
+        $next.addClass("card--next");
+      }
+
+      $this.on("click", ".card", function () {
+        if (!$current.is(this)) {
+          $cards.removeClass("card--current card--out card--next");
+
+          $current.addClass("card--out");
+
+          $current = $(this).addClass("card--current");
+
+          $next = $current.next();
+          if (!$next.length) $next = $cards.first();
+          $next.addClass("card--next");
+        }
+      });
+
+      $this.on("click", ".card--current", function () {
+        $cards.removeClass("card--current card--out card--next");
+
+        $current.addClass("card--out");
+
+        $current = $current.next();
+        if (!$current.length) $current = $cards.first();
+        $current.addClass("card--current");
+
+        $next = $current.next();
+        if (!$next.length) $next = $cards.first();
+        $next.addClass("card--next");
+      });
+
+      $this.addClass("cards--active");
+    });
+  };
+})(jQuery);
+
+$(document).ready(function () {
+  $(".cards").commentCards();
+});
+
+
+
+
+
     // Initialize smooth scrolling
     initSmoothScroll();
 
@@ -317,7 +587,7 @@ document.addEventListener('DOMContentLoaded', function() {
     document.body.style.opacity = '0';
     document.body.style.transition = 'opacity 0.3s ease-in-out';
 
-    setTimeout(() => {
+    setTimeout(function() {
         document.body.style.opacity = '1';
     }, 100);
 });
