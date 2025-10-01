@@ -727,24 +727,23 @@ img {
 /* ========================================
    APPROACH - STACKED IMAGE + TILTED CARD
 ======================================== */
-.cards {
-  position: relative;  
-  list-style-type: none;
-  padding: 0;
-  max-width: 34em;
-  margin-top: 3rem; 
-  margin: 5% auto; 
-  margin-top: 5rem; /* Add this to override the 5% */
-  min-height: 400px; 
+.approach {
+  padding: 2rem 1rem;
 }
 
 .approach h2 {
   text-align: center;
-  margin-bottom: 4rem; 
+  margin-bottom: 4rem;
 }
 
-.approach {
-  padding: 2rem 1rem; 
+.cards {
+  position: relative;
+  list-style-type: none;
+  padding: 0;
+  max-width: 34em;
+  margin: 5% auto;
+  margin-top: 5rem;
+  min-height: 400px;
 }
 
 .card {
@@ -761,10 +760,38 @@ img {
   transition: transform 0.6s cubic-bezier(.8,.2,.1,0.8), background 0.4s linear;
   cursor: pointer;
   user-select: none;
+  width: 100%;
+  box-sizing: border-box;
 }
 
-.card--next { 
-  z-index: 5; 
+/* Make images responsive */
+.approach-image {
+  width: 100%;
+  margin-bottom: 1.5rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.approach-image img {
+  max-width: 100%;
+  height: auto;
+  display: block;
+  object-fit: contain;
+}
+
+.approach-card h3 {
+  margin-top: 0;
+  margin-bottom: 1rem;
+}
+
+.approach-card p {
+  margin: 0;
+  line-height: 1.6;
+}
+
+.card--next {
+  z-index: 5;
   transform: translateY(-25px) rotate(4deg) translateX(25px) scale(1);
 }
 
@@ -791,6 +818,90 @@ img {
   transform: rotate(-1deg) translateX(0%) scale(1);
 }
 
+/* Mobile optimizations */
+@media (max-width: 768px) {
+  .cards {
+    min-height: 450px;
+    max-width: 90%;
+  }
+  
+  .card {
+    padding: 20px;
+  }
+  
+  .approach-image {
+    margin-bottom: 1rem;
+  }
+  
+  .approach-image img {
+    max-width: 80%;
+    max-height: 150px;
+  }
+  
+  .approach h2 {
+    margin-bottom: 2rem;
+    font-size: 1.8rem;
+  }
+  
+  .approach-card h3 {
+    font-size: 1.2rem;
+  }
+  
+  .approach-card p {
+    font-size: 0.95rem;
+  }
+  
+  /* Adjust card transforms for mobile */
+  .card {
+    transform: translateY(0) rotate(2deg) translateX(10px) scale(1);
+  }
+  
+  .card--next {
+    transform: translateY(-15px) rotate(3deg) translateX(15px) scale(1);
+  }
+  
+  .card--out {
+    transform: translateY(-30px) rotate(5deg) translateX(30px) scale(0.95);
+  }
+  
+  @keyframes card-out {
+    0% { z-index: 20; transform: translateY(0px) rotate(-2deg); }
+    50% { transform: translateY(-100%) rotate(-3deg) translateX(-20px); }
+    80% { z-index: 1; }
+    100% { transform: translateY(-30px) rotate(5deg) translateX(30px) scale(0.95); }
+  }
+}
+
+@media (max-width: 480px) {
+  .approach {
+    padding: 1.5rem 0.5rem;
+  }
+  
+  .cards {
+    min-height: 500px;
+  }
+  
+  .card {
+    padding: 15px;
+  }
+  
+  .approach-image img {
+    max-width: 70%;
+    max-height: 120px;
+  }
+  
+  .approach h2 {
+    font-size: 1.5rem;
+  }
+  
+  .approach-card h3 {
+    font-size: 1.1rem;
+  }
+  
+  .approach-card p {
+    font-size: 0.9rem;
+  }
+}
 
 /* ========================================
    FOOTER
