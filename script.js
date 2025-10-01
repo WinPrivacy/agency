@@ -12,7 +12,7 @@ class InfiniteMarquee {
         this.currentPosition = 0;
 
         this.init();
-    }
+    }//
 
     init() {
         // Clone the content to create seamless loop
