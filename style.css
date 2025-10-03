@@ -183,48 +183,78 @@ img {
    WORK SECTION
 ======================================== */
 .work {
-    padding: 2rem 0;
-    max-width: 1400px;
-    margin: 0 auto;
-    margin-top: 12rem;
+  padding: 2rem 0;
+  max-width: 1400px;
+  margin: 0 auto;
+  margin-top: 12rem;
+}
+
+.work .container {
+  display: flex;
+  flex-direction: row;
+  align-items: flex-start;
+  gap: 2rem;
 }
 
 .container-left, 
 .container-right {
-    width: 50%;
-}
-
-.work .container {
-    display: flex;
-    flex-direction: row;
-    align-items: flex-start;
-    gap: 2rem; 
+  width: 50%;
 }
 
 .work-text {
-    width: 50%;
+  width: 50%;
 }
 
 #mission .work-text {
-    width: 100%;
+  width: 100%;
 }
 
 .work-text-mob {
-    display: none;
+  display: none;
 }
 
 .work-text p:first-child {
-    margin-bottom: 2rem;
+  margin-bottom: 2rem;
 }
 
 .images {
-    margin: -6rem 0rem auto;
-    width: 50%;
+  margin: -6rem 0rem auto;
+  width: 50%;
 }
 
-.container-left .images, .container-right .images {
-    width: 100%;
+.container-left .images, 
+.container-right .images {
+  width: 100%;
 }
+
+.images img {
+  width: 100%;
+  height: auto;
+  display: block;
+  border-radius: 0;       /* remove rounded if needed */
+  background: none;       /* ✅ removes white background */
+  mix-blend-mode: multiply; /* optional: removes white box if PNG */
+}
+
+/* ===== Mobile Fix ===== */
+@media (max-width: 768px) {
+  .work .container {
+    flex-direction: column; /* stack text and images */
+    align-items: center;
+  }
+
+  .work-text {
+    width: 100%; /* full width text */
+    order: 1;    /* text first */
+  }
+
+  .images {
+    width: 100%; /* full width images */
+    margin: 2rem 0 0; /* spacing below text */
+    order: 2;   /* images after text */
+  }
+}
+
 
 /* ========================================
    IMAGE STACK FUNCTIONALITY - NO ROTATION, SIZE/OFFSET BASED
@@ -605,11 +635,11 @@ img {
   }
 
   /* stacked “pile” look */
-  .team-member:nth-child(1) { transform: rotate(-8deg) translateY(-20px); z-index: 1; }
-  .team-member:nth-child(2) { transform: rotate(5deg) translateY(0px); z-index: 2; }
-  .team-member:nth-child(3) { transform: rotate(-3deg) translateY(10px); z-index: 3; }
-  .team-member:nth-child(4) { transform: rotate(7deg) translateY(20px); z-index: 4; }
-  .team-member:nth-child(5) { transform: rotate(-5deg) translateY(30px); z-index: 5; }
+.team-member:nth-child(1) { transform: rotate(-6deg) translateY(-6px); z-index: 1; }
+.team-member:nth-child(2) { transform: rotate(4deg)  translateY(-3px); z-index: 2; }
+.team-member:nth-child(3) { transform: rotate(-2deg) translateY(0px);  z-index: 3; }
+.team-member:nth-child(4) { transform: rotate(5deg)  translateY(3px);  z-index: 4; }
+.team-member:nth-child(5) { transform: rotate(-4deg) translateY(6px);  z-index: 5; }
 
   /* active one is centered and full opacity */
   .team-member.active {
