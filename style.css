@@ -367,6 +367,8 @@ img {
     color: #111;
     flex-shrink: 0;
     letter-spacing: 0.5px;
+    font-size: 2.5rem; /* 👈 make text smaller */
+
 }
 
 /* ========================================
@@ -527,7 +529,6 @@ img {
 
 .team-member:hover {
     transform: translateY(-10px) rotate(2deg);
-    cursor: pointer;
     z-index: 10;
 }
 
