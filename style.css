@@ -549,13 +549,13 @@ img {
   gap: 2rem;
   width: 100%;
   margin: 0;
+  justify-content: center; /* ✅ centers last row */
 }
 
-/* ====== TEAM MEMBER (desktop default) ====== */
 .team-member {
   display: flex;
   flex-direction: column;
-  flex: 0 0 calc(21% - 1.6rem);
+  flex: 0 0 calc(30% - 2rem); /* ~3 per row */
   transition: transform 0.3s ease, z-index 0.3s ease;
 }
 
