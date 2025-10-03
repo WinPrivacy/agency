@@ -599,3 +599,19 @@ window.addEventListener('beforeunload', function() {
         window.marquee.destroy();
     }
 });
+
+
+document.addEventListener("DOMContentLoaded", function () {
+  const members = document.querySelectorAll(".team-member");
+  let current = 0;
+
+  if (window.innerWidth <= 768) { // only on mobile
+    members[current].classList.add("active");
+
+    document.querySelector(".first").addEventListener("click", () => {
+      members[current].classList.remove("active");
+      current = (current + 1) % members.length;
+      members[current].classList.add("active");
+    });
+  }
+});
