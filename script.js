@@ -403,91 +403,6 @@ class FloatingImages {
     }
 }
 
-// Image Stack Cycling Class - Support for More Images
-class ImageStack {
-            constructor(stackContainer) {
-                this.container = stackContainer;
-                this.images = Array.from(stackContainer.querySelectorAll('.s-img'));
-                this.isAnimating = false;
-                this.init();
-            }
-
-            init() {
-                if (this.images.length === 0) return;
-
-                this.container.addEventListener('click', () => {
-                    if (!this.isAnimating) this.rotateStack();
-                });
-
-                // Set initial z-index based on order
-                this.images.forEach((img, index) => {
-                    gsap.set(img, {
-                        zIndex: this.images.length - index
-                    });
-                });
-            }
-
-            rotateStack() {
-                this.isAnimating = true;
-                const topImage = this.images[0];
-
-                // Animate top image out with rotation and movement
-                const tl = gsap.timeline({
-                    onComplete: () => {
-                        // Move the top image to the back of the array
-                        this.images.push(this.images.shift());
-                        
-                        // Reset the z-indices
-                        this.images.forEach((img, index) => {
-                            gsap.set(img, {
-                                zIndex: this.images.length - index
-                            });
-                        });
-
-                        this.isAnimating = false;
-                    }
-                });
-
-                // Animate top card flying off to the side and back
-                tl.to(topImage, {
-                    x: 200,
-                    y: -100,
-                    rotation: 15,
-                    scale: 0.8,
-                    opacity: 0.5,
-                    duration: 0.4,
-                    ease: "power2.in"
-                })
-                .to(topImage, {
-                    x: 0,
-                    y: 0,
-                    rotation: 0,
-                    scale: 1,
-                    opacity: 1,
-                    duration: 0.3,
-                    ease: "power2.out"
-                });
-
-                // Subtle movement for other cards
-                this.images.slice(1).forEach((img, index) => {
-                    gsap.to(img, {
-                        y: -5,
-                        duration: 0.2,
-                        yoyo: true,
-                        repeat: 1,
-                        delay: index * 0.05,
-                        ease: "power1.inOut"
-                    });
-                });
-            }
-        }
-
-        // Initialize when DOM is ready
-        document.addEventListener('DOMContentLoaded', () => {
-            document.querySelectorAll('.image-stack').forEach(stack => {
-                new ImageStack(stack);
-            });
-        });
 
 // Smooth scroll functionality
 function initSmoothScroll() {
@@ -621,3 +536,34 @@ document.addEventListener("DOMContentLoaded", function () {
     });
   }
 });
+
+const imageStack = document.querySelector('.image-stack');
+        const images = document.querySelectorAll('.cs-image');
+        
+        // Click handler for the entire stack
+        imageStack.addEventListener('click', function() {
+            const topImage = imageStack.querySelector('.cs-image:nth-child(1)');
+            
+            // Add cycling animation
+            topImage.classList.add('cycling');
+            
+            // After animation completes, move to back
+            setTimeout(() => {
+                topImage.classList.remove('cycling');
+                imageStack.appendChild(topImage);
+            }, 500);
+        });
+
+        // Prevent multiple rapid clicks
+        let isAnimating = false;
+        imageStack.addEventListener('click', function(e) {
+            if (isAnimating) {
+                e.stopImmediatePropagation();
+                return;
+            }
+            
+            isAnimating = true;
+            setTimeout(() => {
+                isAnimating = false;
+            }, 500);
+        }, true);

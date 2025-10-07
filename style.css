@@ -220,6 +220,8 @@ img {
 .images {
   margin: -6rem 0rem auto;
   width: 50%;
+  position: relative;
+  min-height: 400px;
 }
 
 .container-left .images, 
@@ -227,34 +229,100 @@ img {
   width: 100%;
 }
 
+.image-stack {
+  position: relative;
+  width: 100%;
+  height: 100%;
+}
+
+.cs-image {
+  position: absolute;
+  width: 100%;
+  cursor: pointer;
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  transform-origin: center center;
+}
+
 .images img {
   width: 100%;
   height: auto;
   display: block;
-  border-radius: 0;       /* remove rounded if needed */
-  background: none;       /* ✅ removes white background */
-  mix-blend-mode: multiply; /* optional: removes white box if PNG */
+  border-radius: 0;
+  background: none;
+  mix-blend-mode: multiply;
+}
+
+/* Stack positioning with offset */
+.cs-image:nth-child(1) {
+  z-index: 4;
+  transform: translate(0px, 0px) rotate(-2deg);
+}
+
+.cs-image:nth-child(2) {
+  z-index: 3;
+  transform: translate(12px, 16px) rotate(3deg);
+}
+
+.cs-image:nth-child(3) {
+  z-index: 2;
+  transform: translate(-8px, 32px) rotate(-1deg);
+}
+
+.cs-image:nth-child(4) {
+  z-index: 1;
+  transform: translate(16px, 48px) rotate(2deg);
+}
+
+/* Hover effect for top image */
+.cs-image:nth-child(1):hover {
+  transform: translate(0px, -8px) rotate(-2deg) scale(1.02);
+}
+
+/* Cycling animation - simple fade */
+.cs-image.cycling {
+  animation: cycleOut 0.3s ease-out forwards;
+}
+
+@keyframes cycleOut {
+  0% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+  }
 }
 
 /* ===== Mobile Fix ===== */
 @media (max-width: 768px) {
   .work .container {
-    flex-direction: column; /* stack text and images */
+    flex-direction: column;
     align-items: center;
   }
 
   .work-text {
-    width: 100%; /* full width text */
-    order: 1;    /* text first */
+    width: 100%;
+    order: 1;
   }
 
   .images {
-    width: 100%; /* full width images */
-    margin: 2rem 0 0; /* spacing below text */
-    order: 2;   /* images after text */
+    width: 100%;
+    margin: 2rem 0 0;
+    order: 2;
+    min-height: 300px;
+  }
+
+  .cs-image:nth-child(2) {
+    transform: translate(8px, 12px) rotate(3deg);
+  }
+
+  .cs-image:nth-child(3) {
+    transform: translate(-6px, 24px) rotate(-1deg);
+  }
+
+  .cs-image:nth-child(4) {
+    transform: translate(10px, 36px) rotate(2deg);
   }
 }
-
 
 /* ========================================
    IMAGE STACK FUNCTIONALITY - NO ROTATION, SIZE/OFFSET BASED
