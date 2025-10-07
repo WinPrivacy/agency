@@ -403,7 +403,86 @@ class FloatingImages {
     }
 }
 
+// Image Stack Cycling Class - Support for More Images
+class ImageStack {
+            constructor(stackContainer) {
+                this.container = stackContainer;
+                this.images = Array.from(stackContainer.querySelectorAll('.s-img'));
+                this.isAnimating = false;
+                this.init();
+            }
 
+            init() {
+                if (this.images.length === 0) return;
+
+                this.container.addEventListener('click', () => {
+                    if (!this.isAnimating) this.rotateStack();
+                });
+
+                // Set initial z-index based on order
+                this.images.forEach((img, index) => {
+                    gsap.set(img, {
+                        zIndex: this.images.length - index
+                    });
+                });
+            }
+
+            rotateStack() {
+                this.isAnimating = true;
+                const topImage = this.images[0];
+
+                // Animate top image out with rotation and movement
+                const tl = gsap.timeline({
+                    onComplete: () => {
+                        // Move the top image to the back of the array
+                        this.images.push(this.images.shift());
+                        
+                        // Reset the z-indices
+                        this.images.forEach((img, index) => {
+                            gsap.set(img, {
+                                zIndex: this.images.length - index
+                            });
+                        });
+
+                        this.isAnimating = false;
+                    }
+                });
+
+                // Animate top card flying off to the side and back
+                tl.to(topImage, {
+                    x: 200,
+                    y: -100,
+                    rotation: 15,
+                    scale: 0.8,
+                    opacity: 0.5,
+                    duration: 0.4,
+                    ease: "power2.in"
+                })
+                .to(topImage, {
+                    x: 0,
+                    y: 0,
+                    rotation: 0,
+                    scale: 1,
+                    opacity: 1,
+                    duration: 0.3,
+                    ease: "power2.out"
+                });
+
+                // Subtle movement for other cards
+                this.images.slice(1).forEach((img, index) => {
+                    gsap.to(img, {
+                        y: -5,
+                        duration: 0.2,
+                        yoyo: true,
+                        repeat: 1,
+                        delay: index * 0.05,
+                        ease: "power1.inOut"
+                    });
+                });
+            }
+        }
+
+        // Initialize when DOM is ready
 // Smooth scroll functionality
 function initSmoothScroll() {
     document.querySelectorAll('a[href^="#"]').forEach(anchor => {
@@ -431,13 +510,8 @@ document.addEventListener('DOMContentLoaded', function() {
     const floatingImages = new FloatingImages();
 
     // Initialize image stacks
-    const imageStacks = document.querySelectorAll('.image-stack');
-    imageStacks.forEach(stack => {
-        new ImageStack(stack);
-    });
 
     // Initialize TRUE infinite horizontal scroll
-    const infiniteScroll = new TrueInfiniteScroll('#infinite-scroll');
 
 // APPROACH STACK - Alternating image/card (JQUERY)
 (function ($) {
