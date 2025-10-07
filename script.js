@@ -606,8 +606,14 @@ document.addEventListener("DOMContentLoaded", function () {
   let current = 0;
 
   if (window.innerWidth <= 768) { // only on mobile
-    members[current].classList.add("active");
+    // Set initial state
+    members.forEach((member, index) => {
+      if (index === current) {
+        member.classList.add("active");
+      }
+    });
 
+    // Click on the container to cycle
     document.querySelector(".first").addEventListener("click", () => {
       members[current].classList.remove("active");
       current = (current + 1) % members.length;
