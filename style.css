@@ -471,12 +471,12 @@ img {
 /* Mobile adjustments */
 @media (max-width: 768px) {
     .marquee-content span {
-        font-size: 2rem !important;
+        font-size: 1.75rem !important;
         margin-right: 30px;
     }
     
     .marquee-container {
-        margin: 2rem 0;
+        margin: 1.5rem 0;
     }
 }
 
