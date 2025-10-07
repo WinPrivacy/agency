@@ -483,7 +483,7 @@ img {
 /* Small mobile */
 @media (max-width: 480px) {
     .marquee-content span {
-        font-size: 0.9rem !important;
+        font-size: 1.5rem !important;
         margin-right: 25px;
     }
 }
