@@ -397,10 +397,28 @@ img {
     color: #111;
     flex-shrink: 0;
     letter-spacing: 0.5px;
-    font-size: 2.5rem; /* 👈 make text smaller */
-
+    font-size: 2.5rem;
 }
 
+/* Mobile adjustments */
+@media (max-width: 768px) {
+    .marquee-content span {
+        font-size: 2rem !important;
+        margin-right: 30px;
+    }
+    
+    .marquee-container {
+        margin: 2rem 0;
+    }
+}
+
+/* Small mobile */
+@media (max-width: 480px) {
+    .marquee-content span {
+        font-size: 0.9rem !important;
+        margin-right: 25px;
+    }
+}
 /* ========================================
    MISSION SECTION - INFINITE HORIZONTAL SCROLL
 ======================================== */
