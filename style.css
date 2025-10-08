@@ -249,7 +249,7 @@ img {
   display: block;
   border-radius: 0;
   background: none;
-  mix-blend-mode: multiply;
+  /* Removed mix-blend-mode: multiply; */
 }
 
 /* Stack positioning with offset */
