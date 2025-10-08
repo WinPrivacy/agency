@@ -644,7 +644,7 @@ img {
   flex-direction: column;
   flex: 0 0 400px;
   max-width: 400px;
-  margin-left: -1git 80px;
+  margin-left: -180px;
   transition: transform 0.3s ease, z-index 0.3s ease;
 }
 
