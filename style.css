@@ -631,18 +631,23 @@ img {
 
 .first {
   display: flex;
-  flex-wrap: wrap;
-  gap: 2rem;
+  flex-wrap: nowrap; /* Prevent wrapping */
+  gap: 0;
   width: 100%;
   margin: 0;
-  justify-content: center; /* ✅ centers last row */
+  justify-content: center;
 }
 
 .team-member {
   display: flex;
   flex-direction: column;
-  flex: 0 0 calc(30% - 2rem); /* ~3 per row */
+  flex: 0 0 320px; /* Bigger width */
   transition: transform 0.3s ease, z-index 0.3s ease;
+  margin-right: -60px; /* Increased overlap for bigger images */
+}
+
+.team-member:last-child {
+  margin-right: 0;
 }
 
 .team-member img {
@@ -699,7 +704,12 @@ img {
 /* Tablet */
 @media (max-width: 1024px) {
   .team-member {
-    flex: 0 0 calc(33.33% - 1.5rem);
+    flex: 0 0 240px;
+    margin-right: -40px;
+  }
+  
+  .team-member:last-child {
+    margin-right: 0;
   }
 }
 
@@ -707,6 +717,7 @@ img {
 @media (max-width: 768px) {
   .first {
     position: relative;
+    flex-wrap: wrap; /* Allow wrapping on mobile */
     justify-content: center;
     align-items: center;
     min-height: 420px;
@@ -717,15 +728,16 @@ img {
     position: absolute;
     flex: 0 0 280px;
     max-width: 280px;
+    margin-right: 0; /* Reset overlap for mobile */
     transition: transform 0.4s ease, opacity 0.4s ease, z-index 0.4s ease;
   }
 
-  /* stacked “pile” look */
-.team-member:nth-child(1) { transform: rotate(-6deg) translateY(-6px); z-index: 1; }
-.team-member:nth-child(2) { transform: rotate(4deg)  translateY(-3px); z-index: 2; }
-.team-member:nth-child(3) { transform: rotate(-2deg) translateY(0px);  z-index: 3; }
-.team-member:nth-child(4) { transform: rotate(5deg)  translateY(3px);  z-index: 4; }
-.team-member:nth-child(5) { transform: rotate(-4deg) translateY(6px);  z-index: 5; }
+  /* stacked "pile" look */
+  .team-member:nth-child(1) { transform: rotate(-6deg) translateY(-6px); z-index: 1; }
+  .team-member:nth-child(2) { transform: rotate(4deg)  translateY(-3px); z-index: 2; }
+  .team-member:nth-child(3) { transform: rotate(-2deg) translateY(0px);  z-index: 3; }
+  .team-member:nth-child(4) { transform: rotate(5deg)  translateY(3px);  z-index: 4; }
+  .team-member:nth-child(5) { transform: rotate(-4deg) translateY(6px);  z-index: 5; }
 
   /* active one is centered and full opacity */
   .team-member.active {
@@ -761,7 +773,6 @@ img {
     max-width: 240px;
   }
 }
-
 /* ========================================
    SERVICES
 ======================================== */
