@@ -241,6 +241,11 @@ img {
   cursor: pointer;
   transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
   transform-origin: center center;
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+  transform-style: preserve-3d;
+  -webkit-transform-style: preserve-3d;
+  overflow: hidden;
 }
 
 .images img {
@@ -249,7 +254,9 @@ img {
   display: block;
   border-radius: 0;
   background: none;
-  /* Removed mix-blend-mode: multiply; */
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+  transform: scale(1.01);
 }
 
 /* Stack positioning with offset */
