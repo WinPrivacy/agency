@@ -893,6 +893,8 @@ img {
             .service-item:active .service-img,
             .service-item.active .service-img {
                 scale: 1;
+            }
+        }
 /* ========================================
    APPROACH - STACKED IMAGE + TILTED CARD
 ======================================== */
