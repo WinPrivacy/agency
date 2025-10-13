@@ -189,6 +189,15 @@ img {
   margin-top: 12rem;
 }
 
+.images img {
+  width: 100%;
+  height: auto; /* ← critical for SVG scaling */
+  display: block;
+  object-fit: contain; /* prevents cropping */
+  max-width: 100%;
+}
+
+
 .work .container {
   display: flex;
   flex-direction: row;
@@ -199,6 +208,11 @@ img {
 .container-left, 
 .container-right {
   width: 50%;
+}
+
+.work-item {
+  aspect-ratio: 16 / 9;
+  width: 80%;
 }
 
 .work-text {
