@@ -275,12 +275,27 @@ img {
   filter: none !important;
   -webkit-filter: none !important;
 }
-
-.images img {
+.cs-image picture {
   width: 100%;
   height: 100%;
   display: block;
-  object-fit: cover;
+}
+
+.cs-image picture img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  object-position: center;
+}
+
+
+
+.images img {
+  width: 100%;
+  height: auto; 
+  display: block;
+  object-fit: contain; 
+  max-width: 100%;
   border-radius: 0;
   backface-visibility: hidden;
   -webkit-backface-visibility: hidden;
