@@ -612,32 +612,32 @@ document.addEventListener("DOMContentLoaded", function () {
 });
 
 const imageStack = document.querySelector('.image-stack');
-        const images = document.querySelectorAll('.cs-image');
-        
-        // Click handler for the entire stack
-        imageStack.addEventListener('click', function() {
-            const topImage = imageStack.querySelector('.cs-image:nth-child(1)');
-            
-            // Add cycling animation
-            topImage.classList.add('cycling');
-            
-            // After animation completes, move to back
-            setTimeout(() => {
-                topImage.classList.remove('cycling');
-                imageStack.appendChild(topImage);
-            }, 500);
-        });
+const images = document.querySelectorAll('.cs-image');
 
-        // Prevent multiple rapid clicks
-        let isAnimating = false;
-        imageStack.addEventListener('click', function(e) {
-            if (isAnimating) {
-                e.stopImmediatePropagation();
-                return;
-            }
-            
-            isAnimating = true;
-            setTimeout(() => {
-                isAnimating = false;
-            }, 500);
-        }, true);
+// Prevent multiple rapid clicks
+let isAnimating = false;
+imageStack.addEventListener('click', function(e) {
+    if (isAnimating) {
+        e.stopImmediatePropagation();
+        return;
+    }
+    
+    isAnimating = true;
+    setTimeout(() => {
+        isAnimating = false;
+    }, 500);
+}, true);
+
+// Click handler for the entire stack
+imageStack.addEventListener('click', function() {
+    const bottomImage = imageStack.querySelector('.cs-image:last-child');
+    
+    // Add cycling animation
+    bottomImage.classList.add('cycling');
+    
+    // After animation completes, move to top
+    setTimeout(() => {
+        bottomImage.classList.remove('cycling');
+        imageStack.insertBefore(bottomImage, imageStack.firstChild);
+    }, 500);
+});
