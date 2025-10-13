@@ -869,7 +869,23 @@ img {
         width: 60px;
     }
 }
+
+/* Hover for desktop */
 .service-item:hover .service-img {
+    opacity: 1;
+    scale: 2;
+    transition: all ease-out 0.5s;
+}
+
+/* Active state for mobile touch */
+.service-item:active .service-img {
+    opacity: 1;
+    scale: 2;
+    transition: all ease-out 0.5s;
+}
+
+/* Alternative: if you want it to stay visible after tap until another item is tapped */
+.service-item.active .service-img {
     opacity: 1;
     scale: 2;
     transition: all ease-out 0.5s;
